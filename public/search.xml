@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[正则表达式的贪婪匹配与非贪婪匹配]]></title>
+    <url>%2F2017%2F09%2F07%2Fgreedy-matching%2F</url>
+    <content type="text"><![CDATA[情景之前写过一个简单的爬虫，每天获取公司insgtagram主页的粉丝数用来进行粉丝趋势的展示。代码很简单就是通过获取主页源代码后用正则表达式匹配其中的一串json数据，再用python的json解析库进行解析，从中获取粉丝数。 然而昨天这个爬虫报错了，我重新看了一下ins主页的网页源代码，发现其中增加了一段内容，这段内容正好被我匹配进去了。经过思考显而易见，这是贪婪匹配的问题。 贪婪匹配与非贪婪匹配现在这些术语听起来都很吓人，其实这是正则匹配的两种模式，很容易解释： 贪婪匹配：尽可能匹配最长的字符串 飞贪婪匹配： 尽可能匹配最短的字符串 举个例子：aa&lt;div&gt;test1&lt;/div&gt;bb&lt;div&gt;test2&lt;/div&gt;cc 如果想要匹配一个完整的div，贪婪模式的结果为：&lt;div&gt;test1&lt;/div&gt;bb&lt;div&gt;test2&lt;/div&gt; 非贪婪模式的结果为：&lt;div&gt;test1&lt;/div&gt; 可以发现贪婪模式会匹配尽可能长的字符串，而非贪婪模式在第一次匹配成功后就会停止匹配。 如何区分两种模式默认情况下匹配都是贪婪模式，如果要改成非贪婪模式，只需要量词后面加上一个问号?。 常用的量词有： {m,n} {m,} ? * + 这些默认都是贪婪模式，若改成非贪婪模式，只需这样： {m,n}? {m,}? ?? *? +? 针对上面那个div的例子，贪婪模式的匹配表达式为：&lt;div&gt;.*&lt;/div&gt; 非贪婪模式的匹配表达式为：&lt;div&gt;.*?&lt;/div&gt; 总结贪婪模式就是匹配最长的字符串，非贪婪模式就是匹配最短字符串。 默认情况下匹配都是贪婪模式，如果要改成非贪婪模式，只需要量词后面加上一个问号?。 使用贪婪模式还是非贪婪模式，这主要取决于我们的需求。但有一点，非贪婪模式的性能一定是高于贪婪模式的。 最后，附上我的爬虫代码： 12345678910111213141516171819# -*- coding: UTF-8 -*-import jsonimport requestsimport redef get_by_request(): username = 'insta360official' url = 'https://www.instagram.com/' + username + '/' response = requests.get(url=url, verify=False) page = response.text pattern = re.compile("window._sharedData = (.*?);&lt;/script&gt;", re.S) items = re.findall(pattern, page) jsonData = json.loads(items[0]) count = jsonData['entry_data']['ProfilePage'][0]['user']['followed_by']['count'] print count return countif __name__ == "__main__": get_by_request() 文章标题：正则表达式的贪婪匹配与非贪婪匹配文章作者：Ciel Ni文章链接：http://www.cielni.com/2017/09/07/greedy-matching/有问题或建议欢迎在我的博客讨论，转载或引用希望标明出处，感激不尽！]]></content>
+      <categories>
+        <category>爬虫笔记</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>爬虫</tag>
+        <tag>实习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[【转载】时间就是一段路的小偷 by Allen Yin]]></title>
+    <url>%2F2017%2F08%2F15%2Fechoes-of-the-rainbow%2F</url>
+    <content type="text"><![CDATA[当穆里奇以梅开二度宣告自己四年后的回归，当博尔特用一个深情的吻告别征战多年的第四跑道，当鲁尼用一脚世界波攻入自己第二段埃弗顿生涯的进球，时间仿佛静止。四年，十年，十四年，我们总说时光走的太快，回过头来还是年少时的样子。 站在毕业的路口，有人说舍不得那些经历过的人和事，有人说只是偶尔怀念过去的种种。有人因为离别痛哭流涕，有人因为未来而理性分析过去的得与失。而我一定属于前者，从小感情泛滥超过大部分女孩，看周冬雨的《喜欢你》会感动哭，更别说《从你的全世界路过》。 那天看到同学群里有人发了一张初三时的照片，然后平日里冷清的群开始了吐槽。大家默默找到自己，然后感叹一句，那时候的自己好傻。我在回忆自己十年之前经历过的事和认识的人，十年之后，那些夕阳下的伙伴，那些旧日的足迹，还剩多少余温。 前些天和朋友聊起《我的前半生》里面的贺涵，对于贺涵和唐晶之间十年的感情，似有惋惜又在情理之中。朋友说，当他和唐晶冲突变多，当他心甘情愿地为子君付出的时候，也许贺涵已经找到了更合适的人。是啊，十年的时间，唐晶已经不再是那个初出茅庐的实习生，我爱你是因为我爱当初的那个你，谁能保证十年的交往之后还深爱出当初的感觉。在我看来很多时候，感情都没有对错，大概一切源于人性吧。 后来我总算学会了如何去爱可惜你早已远去消失在人海后来终于在眼泪中明白有些人一旦错过就不再 我在想，如果有一个人，认识十年后还觉得她是当初的模样，那就爱吧。 Allen Yin 二零一七年八月十五日零点五十三分 文章作者： Allen Yin 微信： cherisherwindy 邮箱： sjtuyinlei@163.com]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>随笔</tag>
+        <tag>生活</tag>
+        <tag>转载</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[就算归来不再是少年]]></title>
+    <url>%2F2017%2F07%2F31%2Fnju-software%2F</url>
+    <content type="text"><![CDATA[毕业将近一个半月了，拖到了现在才终于开始总结自己的大学四年生活，其实好像也不算晚。首先，真的很感谢在大学这四年，更准确的说感谢这四年遇到的人和顺利度过本科阶段的自己。如果说高中三年开阔了我的知识面的话，那么大学四年的经历开阔的是我的视野。在南京大学的这四年里，我见到了不同的人和更大的世界，他们帮助我改变了很多固有的想法。 兴趣真的是最好的老师当初选择软件专业我是没有太多犹豫的，不是说我对软件这个行业有多感兴趣，而是把不感兴趣和我认为没有前途的专业排除掉后只剩下它了。当时我觉得兴趣什么的并不重要，就业压力摆在那自己也会好好学的。 经过大概一个多学期，我就知道我错了。我们可以假设高中的学习是一个维度的，努力学习成绩会上来一点，松懈了会下降一点，我们只在乎好好学习这件事，似乎这就是评判一个高中生的唯一标准。到了大学，你会发现就算你认真完成了老师布置的作业，好好复习认真备考，还是达不到预期。因为大学的学习不止这一个维度，那些对本专业具有浓厚兴趣的学生往往会自主去探索远超于课本的内容，在专业方面远远超过了只是认真完成老师任务的学生。有时候觉得自己很努力地在学专业知识了，很努力在在写代码，尝试超越书本了，却还是力不从心。因为别人先天的兴趣优势，而我说实在的对写代码又有多少兴趣呢？ 我在富士通面试的时候，在我前一个面试的学生是一个拥有大量项目经验的软院同学，尽管看成绩的话我似乎稍好一点，但我看的出面试官心里是更倾向他的。在面试的过程中他不断地问我如何看待别人拥有如此多的项目经历而你却没有什么。我也无言以对。大学期间自主参加的项目确实偏少，很大的原因就是对这些软件比赛提不起兴趣，没有什么热情。 这可能就是一个先天的优势，如果大学是一场400米比赛，那么在我看来拥有专业兴趣的人在起跑的时候就已经甩开我100多米了。 在经历了大学四年后，我更加确信了兴趣真的是最好的老师。如果有你非常感兴趣的专业，请一定不要犹豫，你不知道那些选择自己不感兴趣的专业的学长学姐们学得有多痛苦。 行动力很重要《火星救援》的结尾，马特达蒙有一段台词： At some point, everything’s going to go south on you.在某个时候，一切都会变得越来越糟糕 Everything’s going to go south and you’re going to say “This is it.”当一切越来越糟时，你只能坚强地面对 This is how I end.这是我如何解决这个问题的 Now you can either accept that你要么屈服 or you can get to work.要么反抗 That’s all it is.就是这样 You just begin.你只要开始 You do the math. You solve one problem进行计算，解决一个问题 and you solve the next one,解决下一个问题 and then the next.解决下下个问题 And if you solve enough problems, you get to come home.等解决了足够的问题，你就能回家了 在高中的学习生活中，我们遇到的无非是一道难题之类的颗粒度较小的问题。而到了大学迎面袭来的可不是一道题目这样可控的东西了，可能是一个需要从头开始组织的活动，可能是一场毫无准备的考试，可能是一项毫无头绪的课程设计。每当我知道自己要面对这类的问题时，我总会出现短暂的拖延症状。可能是不知道如何开始，也可能是害怕开始，因为一旦开始，就要连续好几天没日没夜地投身进去。我本能地会去想，能不能不要做。这种想法可以让我逃掉软件比赛的压力，却逃不掉考试，逃不掉实习。 唯一的办法就是快速制定计划，然后开始执行计划。就像马特达蒙说的 “You solve one problem and you solve the next one, and then the next. And if you solve enough problems, you get to come home.” 把未来的任务分成一个个颗粒足够细的小任务，然后一个接着一个去解决这些任务，等到把所有的任务都解决了，你的工作差不多就完成了。 空想计划没有用，一定要去做。我现在觉得我大学四分之一的时间浪费在了等待与空想上。 每一条你走过的路 都是人生的必经之路这是我大学时期体会最最最深刻的一句话，大学里大大小小很多事情基本都在我心里印证了它。 刚进大学那会儿，我们对学长学姐是很依赖的，我们总想从学长学姐口中得到关于大学许许多多的经验，好让自己少走一点弯路，在本科的道路上走得更轻盈一点。 然而问题是，经验实际上是一个很虚的东西，它是因人而异的。在大多数情况下，学长学姐们的经验是无法取代自己的亲身经历的。 首先，学长学姐把他们通过亲身经历得来的经验用语言表达出来的时候，大多数都是笼统的概括，给我们一个大概的印象。比如这门课坑不坑，考试难不难，这个老师好不好，这个知识点重不重要等等。但是课程难在哪里，考试重点是什么等等，这些细节方面是他们无法告诉我们却又是很重要的。只有我们真真切切经历过，我们才会形成一个完整的认知，到时候你会发现，这根本不是难不难和坑不坑所能概括的。从学长和学姐的视角来说，他们无法把完整的认知传达给我们，只能用通俗简易的形容词把他们的印象最直接地传达给我们。 其次。经验什么的都是因人而异的，具有特殊性和偶然性。仅靠前人的判断下定结论显然太过随便，最多只能当参考。 另外，很多感受是要经历过才能更深刻的，在大学四年这个成长阶段，有些该踩的坑是一定要踩的，有些该碰的壁是一定要碰的，这样在以后的经历中才能避免重复犯错。这和解一道数学题目是一样的，看一遍参考答案和自己完完整整的做一遍的效果是天差地别的。]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>随笔</tag>
+        <tag>生活</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[ZOL中关村在线手机参数爬虫]]></title>
+    <url>%2F2017%2F07%2F28%2Fzol-phone-crawler%2F</url>
+    <content type="text"><![CDATA[需求由于安卓手机的配置不尽相同，在公司推出安卓版360度全景相机 Insta360 Air 后，客服经常会收到来电，询问其手机型号是否适用该产品。大部分情况下顾客只知道自己的手机型号，却不知道其详细参数，这让客服的工作量大大增加。于是客服主管希望能把ZOL 中关村在线里的所有安卓系统的手机型号和其对应的参数通过爬虫搜集下来，做成Excel表格方便以后随时随地检索手机参数。 分析 在选择限定的操作系统条件后，得到该url，经过测试发现，url最后下划线后面的数为页码。不过，手机列表的参数信息是不完整的，点击更多参数可以得到每个手机型号的详细参数信息，所以我们应该存下每个手机型号更多参数页面的url。 针对每一个型号的手机，访问其参数详情页进行参数采集。 关于如何选用何种方式进行爬虫采集。由于ZOL中关村在线的手机信息数据都是在请求url时就同步返回给浏览器的，不存在js异步加载的问题，所以我们可以直接用urllib2库或者requests来请求url获取网页信息。由于网页信息比较复杂，我们需要 Beautiful Soup 来帮助我们解析html页面，获取参数信息。（Beautiful Soup教程） 实现下面通过代码加注释来介绍具体的操作步骤，在这之前希望大家已经看过上面的Beautiful Soup教程，对Beautiful Soup的使用方法有一定了解。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126# -*- coding: UTF-8 -*-import sysimport urllib2import reimport xlwtimport timefrom bs4 import BeautifulSoupreload(sys)sys.setdefaultencoding("utf-8")def getValue(res, key): try: result = res[key] except: result = '' return result#存放手机参数详情页面的列表link_list = []base_url = 'http://detail.zol.com.cn/cell_phone_advSearch/subcate57_1_s1398-s7074-s6500-s6502-s6106_1_1__'#控制页面数for i in range(1, 145): url = base_url + str(i) + '.html#showc' response = urllib2.urlopen(url) page = response.read() soup = BeautifulSoup(page, 'html.parser') ul = soup.find('ul', class_='result_list') print url temp = ul.find_all('a', text='更多参数&gt;&gt;') for link in temp: link_list.append('http://detail.zol.com.cn' + link['href']) #把每个手机型号的参数详情页存进数组res_list = []for url in link_list: response = urllib2.urlopen(url) page = response.read() #使用beautiful soup解析html页面，page是字符串 soup = BeautifulSoup(page, 'html.parser') result = &#123;&#125; #去掉多余的br，br有可能会导致BeautifulSoup解析出错 for linebreak in soup.find_all('br'): linebreak.extract() #使用Beautiful Soup提供的方法定位我们想要得到的参数信息 div = soup.find('div',class_='breadcrumb') a_list = div.find_all('a') brand = a_list[2].string model = a_list[3].string result['brand'] = brand result['model'] = model th = soup.find('th',text='硬件') tr = th.parent list = tr.find('ul',class_='category-param-list').find_all('li') for li in list: spans = li.find_all('span') key = spans[0].string value = spans[1].string # print spans[1] if value == None: value = '' temp = spans[1].stripped_strings for i in temp: value += i + ',' # print key,value result[key] = value try: system = result[u'操作系统'] if 'Android' in system: pattern = re.compile("Android.&#123;0,&#125;", re.S) items = re.findall(pattern, system) try: android = str(items[0]) except: android = '' else: android = '' except: android = '' result['android'] = android try: span = soup.find('span',text='连接与共享') temp = span.parent.find_all('span')[1] hasOTG = 'OTG' in temp.strings if hasOTG: result['OTG'] = 'Y' else: result['OTG'] = 'N' except: result['OTG'] = 'N' for key in result: print key,result[key] res_list.append(result)#创建工作簿workbook = xlwt.Workbook(encoding='utf8') #创建sheet sheet1 = workbook.add_sheet(u'手机参数表', cell_overwrite_ok=True) row0 = [u'品牌', u'机型', u'是否支持OTG', u'安卓版本', u'操作系统', u'运行内存', u'机身内存', u'扩展容量', u'CPU型号', u'GPU型号', u'CPU频率', u'存储卡', u'用户界面', u'电池容量', u'电池类型', u'核心数']for i in range(0, len(row0)): sheet1.write(0, i, row0[i])row_index = 1for res in res_list: rows = [ getValue(res, 'brand'), getValue(res, 'model'), getValue(res, 'OTG'), getValue(res, 'android'), getValue(res, u'操作系统'), getValue(res, u'RAM容量'), getValue(res, u'ROM容量'), getValue(res, u'扩展容量'), getValue(res, u'CPU型号'), getValue(res, u'GPU型号'), getValue(res, u'CPU频率'), getValue(res, u'存储卡'), getValue(res, u'用户界面'), getValue(res, u'电池容量'), getValue(res, u'电池类型'), getValue(res, u'核心数') ] for i in range(len(rows)): sheet1.write(row_index, i, rows[i]) row_index += 1t = str(time.time())workbook.save(t + '.xls') # 保存文件 Github地址： https://github.com/NiShuang/mobile_info_crawler 结果导出的Excel表格如下图所示： 文章标题：ZOL中关村在线手机参数爬虫文章作者：Ciel Ni文章链接：http://www.cielni.com/2017/07/28/zol-phone-crawler/有问题或建议欢迎在我的博客讨论，转载或引用希望标明出处，感激不尽！]]></content>
+      <categories>
+        <category>爬虫笔记</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>爬虫</tag>
+        <tag>实习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[健的最后告白（求婚大作战）]]></title>
+    <url>%2F2017%2F07%2F25%2Foperation-love%2F</url>
+    <content type="text"><![CDATA[14年間 14年来 楽しいときも 快乐时 辛い時も 难过时 苦しい時も 痛苦时 ずっと一緒に過ごしてきた礼を 都一起度过的礼 幸せに出来るのは 僕しかいないと本気で思っていました 我真的认为，只有我才能给她幸福 気に食わないことがあると すぐにふてくされる礼を 不和她的意思就马上翻脸的礼 掃除や仕事をサボっていると すぐに怒り出す礼を 如果偷懒不打扫不工作 马上就生气的礼 意地っ張りで 全然素直じゃない礼を 只会逞强 一点儿也不坦率的礼 一番知っているのは僕です 最清楚她的人是我 強い人間に見えて 実はすごく繊細な礼を 事实上是很纤细的礼 自分のことは二の次で 总把自己的事排在第二 誰よりも仲間思いな礼を 比谁都会为朋友着想的礼 ユニフォームの洗濯が 抜群に上手い礼を 清洗制服也很棒的礼 いつもただ そばにいてくれた 礼を 一直守在身边的礼 一番必要としていたのは 僕でした 最需要她的人 是我 でも結局 心の中で思っているだけで 但是总是在心中想着 礼の前では一度も素直になれませんでした 在她面前 一次都没有能坦白 あんなに側にいて 总是陪在我身边 いつでも言えると思っていた言葉が无论什么时候都能说的话 結局一度も言えませんでした最后却一次也没说出来 たった一言が 就连一句话 一度も言えませんでした 也没能说出来 僕は 我 礼のことが 好きでした 喜欢过礼 正直言うと 今でも礼のことが好きです 老实说 现在也爱着她 でも礼は 但是今天 今日多田さんと結婚します 礼要和多田老师结婚 悔しいけど 虽然不甘心 結婚してしまいます 他们也要结婚 礼の存在は 僕の中で すごく大きかったから 礼对我来说 是很重要的存在 この言葉に たどり着くまでに 为了说这些话 ずいぶん時間がかかってしまいました 准备了好长时间 礼 結婚おめでとう 新婚快乐 幸せになれよ 要幸福 幸せにならなかったら如果没让自己幸福 幸せにならなかったら マジで許さないからな我真的不会原谅你的！]]></content>
+      <categories>
+        <category>光影笔记</category>
+      </categories>
+      <tags>
+        <tag>日剧</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[kekbab-case （短横线隔开命名法）]]></title>
+    <url>%2F2017%2F07%2F08%2Fkekbab-case%2F</url>
+    <content type="text"><![CDATA[在Vue.js中，由于 HTML 特性不区分大小写。名字形式为 camelCase 的 prop 用作特性时，需要转为 kebab-case（短横线隔开）。即 myMessage 转为 my-message 。 官网例子： 12345Vue.component('child', &#123; // camelCase in JavaScript props: ['myMessage'], template: '&lt;span&gt;&#123;&#123; myMessage &#125;&#125;&lt;/span&gt;'&#125;) 12&lt;!-- kebab-case in HTML --&gt;&lt;child my-message="hello!"&gt;&lt;/child&gt;]]></content>
+      <categories>
+        <category>前端笔记</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[解决刷新页面不触发 vue-router 的 beforeEach 钩子的问题]]></title>
+    <url>%2F2017%2F06%2F30%2Fvue-router-beforeEach%2F</url>
+    <content type="text"><![CDATA[问题在使用 Vue.js 开发项目时，会用到 vue-router 模块来进行路由管理。为了在用户访问每个页面之前判断用户是否有访问该页面权限，需要用到 vue-router 的 beforeEach 全局钩子，在这个钩子中进行权限判断，决定允许或拒绝用户访问，或者是跳转到登录界面。 代码如下(vue-router 1.0)： 12345678910111213141516171819202122232425262728293031323334353637Vue.use(Router)// routingvar router = new Router()router.map(&#123; '/reject': &#123; component: RejectView &#125;, '/login': &#123; component: LoginView &#125;&#125;)router.start(App, '#app')router.beforeEach(function (transition) &#123; if ( transition.to.path.indexOf('/login') === 0) &#123; transition.next() return &#125; if (document.cookie.indexOf('isLogin=true') &lt; 0) &#123; router.go('/login?redirect=' + transition.to.path) transition.next() &#125; else &#123; var cname = transition.to.params.cname if (cname !== undefined) &#123; var has_permission = store.state.userInfo.power[Nav[cname]] if (!has_permission) &#123; router.go('/reject') transition.next() return &#125; &#125; transition.next() &#125;&#125;) 然而出现一个bug，当我手动 F5 刷新页面时，却没有触发 beforeEach 钩子。 原因查询 vue-router1.0 的说明文档，文档上的 Basic Usage 代码如下： 1234567891011121314151617181920212223242526272829303132333435363738394041// Load the pluginVue.use(VueRouter)// Define some componentsvar Foo = &#123; template: '&lt;p&gt;This is foo!&lt;/p&gt;'&#125;var Bar = &#123; template: '&lt;p&gt;This is bar!&lt;/p&gt;'&#125;// The router needs a root component to render.// For demo purposes, we will just use an empty one// because we are using the HTML as the app template.// !! Note that the App is not a Vue instance.var App = &#123;&#125;// Create a router instance.// You can pass in additional options here, but let's// keep it simple for now.var router = new VueRouter()// Define some routes.// Each route should map to a component. The "component" can// either be an actual component constructor created via// Vue.extend(), or just a component options object.// We'll talk about nested routes later.router.map(&#123; '/foo': &#123; component: Foo &#125;, '/bar': &#123; component: Bar &#125;&#125;)// Now we can start the app!// The router will create an instance of App and mount to// the element matching the selector #app.router.start(App, '#app') 可以发现，样例中把 router.start(App, ‘#app’) 这行代码放在了最后。因为这一步是创建和挂载根实例，是启动路由的最后一步，需要在定义路由实例和配置路由之后进行。 解决修改以后的代码如下： 1234567891011121314151617181920212223242526272829303132333435363738Vue.use(Router)// routingvar router = new Router()router.map(&#123; '/reject': &#123; component: RejectView &#125;, '/login': &#123; component: LoginView &#125;&#125;)router.beforeEach(function (transition) &#123; if ( transition.to.path.indexOf('/login') === 0) &#123; transition.next() return &#125; if (document.cookie.indexOf('isLogin=true') &lt; 0) &#123; router.go('/login?redirect=' + transition.to.path) transition.next() &#125; else &#123; var cname = transition.to.params.cname if (cname !== undefined) &#123; var has_permission = store.state.userInfo.power[Nav[cname]] if (!has_permission) &#123; router.go('/reject') transition.next() return &#125; &#125; transition.next() &#125;&#125;)router.start(App, '#app') 总结在使用 vue-router 模块时，挂载根实例的步骤要放在最后，不然会导致配置不成功。 参考资料 vue-router 2 中文文档 文章标题：解决刷新页面不触发 vue-router 的 beforeEach 钩子的问题文章作者：Ciel Ni文章链接：http://www.cielni.com/2017/06/30/vue-router-beforeEach/有问题或建议欢迎在我的博客讨论，转载或引用希望标明出处，感激不尽！]]></content>
+      <categories>
+        <category>前端笔记</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[动态改变checkbox的选中状态]]></title>
+    <url>%2F2017%2F06%2F12%2Fprop-and-attr%2F</url>
+    <content type="text"><![CDATA[问题在写前端的时候，有一个需求是要用 js 代码动态改变复选框 checkbox 的选中状态。我的思路是通过改变checkbox元素的checked属性来实现页面上复选框是否选中的切换。 一开始的方法是通过jquery的attr()和removeAttr()方法来完成对元素checked属性的添加与修改，代码如下： 12345678leader = $('#leader_modify'); if(is_leader == '1')&#123;// leader.attr('checked', 'checked'); leader.prop('checked', true) &#125;else&#123; leader.prop('checked', false);// leader.removeAttr('checked') &#125; 这样子写是基本可以完成checkbox的状态切换，但会有一个bug：切换在一开始是正常的，但当我点击了一次复选框以后，之前的状态切换就不起作用了（。。这不是坑爹吗！？） 原因经过一番漫无目的的搜索资料，我仔细研究了下 jquery的 .attr() 方法，attr() 可以获取匹配的元素集合中的第一个元素的属性的值，或者设置每一个匹配元素的一个或多个属性。而这个属性的英文为 Attribute，它有别于Property。 property是DOM中的属性，是JavaScript里的对象 attribute是HTML标签上的特性，它的值只能够是字符串 boolean attributes，比如：checked，仅被设置成默认值或初始值。在一个checkbox的元素中，checked attributes在页面加载的时候就被设置，而不管checkbox元素是否被选中。 properties就是浏览器用来记录当前值的东西。正常情况下，properties反映它们相应的attributes(如果存在的话)。但这并不是boolean attriubutes的情况。当用户点击一个checkbox元素或选中一个select元素的一个option时，boolean properties保持最新。但相应的boolean attributes是不一样的，正如上面所述，它们仅被浏览器用来保存初始值。 解决方法由此可见，通过改变 checked 这个 attribute 来实现checkbox 状态的动态改变是不可行的，应该通过设置 checkbox 的 property 属性 来实现。jquery 提供了.prop() 方法。 12345678leader = $('#leader_modify'); if(is_leader == '1')&#123;// leader.attr('checked', 'checked'); leader.prop('checked', true) &#125;else&#123; leader.prop('checked', false);// leader.removeAttr('checked') &#125; 总结 attributes 和 properties之间的差异在特定情况下是很重要。jQuery 1.6之前 ，.attr()方法在取某些 attribute 的值时，会返回 property 的值，这就导致了结果的不一致。从 jQuery 1.6 开始， .prop()方法返回 property 的值,而 .attr() 方法返回 attributes 的值。 通过prop()来获取输入框里面的值永远都是和它里面的值同步的，而通过attr()老获取输入框里面的值一直都是在html标签里面设置的值。 根据官方的建议：具有 true 和 false 两个属性的属性，如 checked, selected 或者 disabled 使用prop()，其他的使用 attr()。 参考资料 Web前端之复选框选中属性 checkbox选中属性—坑到死 DOM 中 Property 和 Attribute 的区别]]></content>
+      <categories>
+        <category>前端笔记</category>
+      </categories>
+      <tags>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Vue 实例生命周期总结]]></title>
+    <url>%2F2017%2F06%2F05%2Fvue-lifecycle%2F</url>
+    <content type="text"><![CDATA[问题由于Vue项目中需要前端导出表格的功能，需要用到第三方组件tableexport。使用该组件只需通过该语句TableExport(document.getElementsByTagName(“table”))生成一个TableExport对象。然而我却遇到一个bug，迟迟得不到预期，花了一整个白天没有解决。 睡觉之前我打印了document.getElementsByTagName(“table”)发现是undefined，这时候我意识到我生成TableExport对象的时机错误了，此时该table元素还没有插入文档中。于是我把这行代码从created钩子函数中移到了ready钩子函数中（vue 1.0），bug终于解决了。 之前的代码是这样子的：123456789101112created () &#123; this.startTime = '2016-06-01' this.endTime = moment().format('YYYY-MM-DD') this.updateColor() this.serial_numbers = '' this.product = 'nano' TableExport(document.getElementsByTagName("table"))&#125;,ready () &#123; &#125; 修改后的代码是这样子的：1234567891011created () &#123; this.startTime = '2016-06-01' this.endTime = moment().format('YYYY-MM-DD') this.updateColor() this.serial_numbers = '' this.product = 'nano'&#125;,ready () &#123; TableExport(document.getElementsByTagName("table"))&#125; 原因这是由于在created钩子执行时，Vue实例虽已经创建完成，但模板还未被编译，元素还未插入DOM文档，所以document.getElementsByTagName(“table”)返回的是undefined。而在ready钩子执行时，模板已被编译，元素已插入DOM文档。 总结查阅了官网并参考网上其他资料后，我总结出了如下了的Vue 实例生命周期表 Vue 1.0 Vue 2.0 描述 init beforeCreate 实例初始化之后，配置之前 created created 实例已经创建完成之后，已完成配置，挂载之前。 beforeCompile - 模板编译开始前 - beforeMount 挂载之前 compiled - 模板编译，但是不担保el已插入文档） ready mounted 模板编译（el第一次插入文档之后）/挂载之后 - beforeUpdate 数据更新前 - updated 数据更新后 - activated keep-alive 组件激活时 - deactivated keep-alive 组件停用时 attached - el插入DOM时 detached - el从DOM中删除时 beforeDestory beforeDestory 实例销毁之前 destoryed destoryed Vue 实例销毁后，Vue 实例指示的所有东西都会解绑，所有的子实例也会被销毁]]></content>
+      <categories>
+        <category>前端笔记</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[托马斯韦恩给布鲁斯韦恩的信（闪点事件）]]></title>
+    <url>%2F2017%2F06%2F02%2Fflash-point-event%2F</url>
+    <content type="text"><![CDATA[Dear Son: There’s only one thing I know about life.I know some things happen by chance.And some things happen because we make them happen.Barry Allen was a man haunted by his past.But when he became the Flash, he left the ghosts behind.He found love. A Family. Friends.Barry thought yesterday was behind him.But somebody wouldn’t let him escape it. When Barry came to me for help, I turned him away.I’m not the hero of this story.I’m a man who’s been corrupted by his own unbearable pain, I’m a man who has too much blood on his hands to be called good.I’m a man who had nothing to live for……until the day I met the Flash. The first time I met Barry Allen, I nearly killed him.Like I said, I’m not the hero of this story. Love AlwaysYour FatherThomas]]></content>
+      <categories>
+        <category>光影笔记</category>
+      </categories>
+      <tags>
+        <tag>DC</tag>
+        <tag>黑暗骑士</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[解决Django中manage.py migrate无效的问题]]></title>
+    <url>%2F2017%2F05%2F30%2Fdjango-migrate%2F</url>
+    <content type="text"><![CDATA[介绍Python的Django框架中有一个对象关系映射器，我们可以在其中以Python代码描述数据库布局，比如像这样：12345678910111213141516from django.db import modelsclass Reporter(models.Model): full_name = models.CharField(max_length=70) def __str__(self): # __unicode__ on Python 2 return self.full_nameclass Article(models.Model): pub_date = models.DateField() headline = models.CharField(max_length=200) content = models.TextField() reporter = models.ForeignKey(Reporter) def __str__(self): # __unicode__ on Python 2 return self.headline 在编写好我们的数据模型models.py后，我们会依次运行如下两条命令来自动创建数据库表： python manage.py makemigrations python manage.py migrate 第一条命令会并记录下你所有的关于modes.py的改动，并在migrations包中生成类似0001_initial.py的文件，但是这个改动还没有作用到数据库。 第二条命令就是比照migrations中的文件，将改动作用到数据库文件。 问题描述在开发过程中，由于种种原因，migrations包中的文件往往不能和实际的模型变化情况保持同步，这会导致在python manage.py migrate的时候产生冲突，无法作用到数据库。 原因分析仔细分析可知，migrations中的每一个脚本文件记录了每一次models.py的改动，这些记录串联起来就是数据库从初始化到现在的变化过程。系统就是根据这些脚本来确定数据库目前的模型状态。如果之前的记录脚本缺失，那么系统认定的数据库状态就会和实际上models.py的状态有所偏差。 举个例子，我们对models.py中的User表进行添加字段的操作，而系统由于缺失了某一个记录脚本，认为不存在User表，在migrate时就会报表缺失的错误信息。 解决方法我不建议网上说的删掉全部migrations文件重新建表的办法，因为如果表中存在重要数据的话重新建表示不可取的。 Django会记录系统migrate操作执行到了哪一个记录脚本，这一个脚本以及之前的所有脚本决定了系统认为的目前数据库的状态。所以我们只要对系统最近一次成功migrate时所执行的脚本进行修改，添加数据库的操作信息，使得脚本文件的记录和目前models的状态同步，告诉系统这个User表我已经创建过了。然后再对models修改，进行makemigrations和migrate操作，就不会报表缺失的错误了。 1234567migrations.CreateModel( name='User', fields=[ ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')), ('name', models.CharField()), ],),]]></content>
+      <categories>
+        <category>python笔记</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Django</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[如何爬取 Google Trends 数据]]></title>
+    <url>%2F2017%2F05%2F28%2Fgoogle-trends%2F</url>
+    <content type="text"><![CDATA[Goole Trends介绍功能介绍谷歌趋势 (Google Trends)是Google推出的一款基于搜索日志分析的应用产品，它通过分析Google全球数以十亿计的搜索结果，告诉用户某一搜索关键词各个时期下在Google被搜索的频率和相关统计数据。（国内访问Google Trends需要翻墙） 指数意义Google Trends在展示趋势的时候会隐藏真实的搜索量，它的逻辑是这样的，在一段时间内，选取这个词条最热的那一天当做100，其他天数的指数是相对于100这天的相对值。如果有很多个词条的话，就选择所有词条中最热那天的数据作为100，其他的词条和其他的日期都是这一天的相对值。也就是说，所有Google Trends给出的热度数据中，最高值就是100，其他值都是相对于最高值进行等比计算的。 上图是一个热度随时间变化的趋势的例子，可以看到，图中的最大值就是100，也就是时间段内的最高点。 爬取方法Google Trends的爬虫流程图如下所示： 我研究Google Trends爬虫的心路历程就不细讲了，当时为了找关键词的token值花了我两天的时间，几乎都想放弃了。后来跟旁边的同事讲了下思路和问题，他听后很明确地告诉我，token就在network的请求里，你一个一个找肯定能找到。果然后面我很快就找到了。 下面我详细讲解最重要的前两步操作。 获取关键词的token值获取关键词token值的接口为： https://trends.google.com/trends/api/explore主要难点是参数的拼接，希望大家对照着浏览器network中的参数一个一个仔细检查自己的参数格式是否有误。以获取关键词insta360的最近30天热度走势为例，请求token值需要携带的参数为： 请求中的req参数是一个json格式的字符串，如果你的请求不通过，很有可能是这个参数的格式或者数值有问题吗，一定要仔细检查。 如果参数正确，将会得到如下的返回结果： 这是谷歌一个很奇怪的地方，他不直接返回json数据，而是在最开头加了五个蜜汁符号，我们只要截取掉前五个字符就可以了。然后通过json库把惊悚字符串转换成python的dict数据格式，就可以得到token值，它的索引位置为[‘widgets’][0][‘token’]。这里给大家推荐Json.cn，可以在线解析json字符串，方便我们在其中找到我们想要的信息。 最后注意的是，我们需要用到python的requests库来发送请求，因为该请求会自动重定向导致我们获取不到数据，需要设置allow_redirects=False来拒绝重定向。 附上代码：123456789101112131415161718192021222324def get_token(key): headers = &#123;&#125; headers['Host'] = 'trends.google.com' headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0' headers['Referfer'] = 'https://trends.google.com/trends/explore?date=today%201-m&amp;q=' + urllib.quote(key) headers['x-client-data'] = 'CIu2yQEIpLbJAQjBtskBCPqcygEIqZ3KAQ==' req = &#123;&#125; req['category'] = 0 req['property'] = '' req['comparisonItem'] = [&#123;"geo": "","keyword": urllib.quote(key).replace(' ', '+'),"time":"today+1-m"&#125;] value = &#123;&#125; value['hl'] = 'zh-CN' value['tz'] = '-480' value['req'] = str(req).replace(' ','') url = 'https://trends.google.com/trends/api/explore?' for index in value: url = url + index + '=' + value[index] + '&amp;' # 后面两个参数很重要 results = requests.get(url, headers=headers, verify=False, allow_redirects=False) page = results.content jsonData = page[5:] data = json.loads(jsonData, encoding="utf-8") token = data['widgets'][0]['token'] return token 携带token值请求数据这一步和上一步很像，只是变了请求接口和请求的参数，而且该请求返回的数据格式和上面很像，同样需要截掉开头五个符号。 获取关键字热度趋势数据的接口为： https://trends.google.com/trends/api/widgetdata/multiline 该请求的参数为： 其中，token的值就是上面获取的token。在req参数中，time的值需要我们拼接。格式为start_date+end_date，end_date是当天日期，start_date是往前推三十天的日期。如果不知道怎么计算前三十天的时期，可以用我最原始的方法:1234567now = datetime.datetime.now()month = (now.month + 10) % 12 + 1year = now.year - month / 12day = min(now.day, calendar.monthrange(year, month)[1])before = now.replace(year=year, month=month, day=day)start_date = before.strftime('%Y-%m-%d')end_date = now.strftime('%Y-%m-%d') 附上代码：123456789101112131415161718192021222324252627282930313233def get_google_trend(key): headers = &#123;&#125; headers['Host'] = 'trends.google.com' headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0' headers['Referfer'] = 'https://trends.google.com/trends/explore?date=today%201-m&amp;q=' + urllib.quote(key) req = &#123;&#125; req['time'] = start_date + "+" + end_date req['resolution'] = "DAY" req['locale'] = "zh-CN" req['comparisonItem'] = [&#123;"geo": &#123;&#125;, "complexKeywordsRestriction": &#123;"keyword": [&#123;"type": "BROAD", "value": urllib.quote(key).replace(' ','+')&#125;]&#125;&#125;] req['requestOptions'] = &#123;"property":"","backend":"IZG","category":0&#125; value = &#123;&#125; value['hl'] = 'zh-CN' value['tz'] = '-480' value['req'] = str(req).replace(' ','') value['token'] = token[key] url = 'https://trends.google.com/trends/api/widgetdata/multiline? for index in value: url = url + index + '=' + value[index] + '&amp;' results = requests.get(url, headers=headers, verify=False) page = results.content jsonData = page[5:] data = json.loads(jsonData, encoding="utf-8") items = data['default']['timelineData'] result = [] for item in items: timestamp = int(item['time']) time_temp = time.localtime(timestamp) date = time.strftime("%Y-%m-%d", time_temp) value = item['value'][0] temp = &#123;'key': key, 'date': date, 'google_index': value&#125; result.append(temp) return result 后面两步我就不讲了，第三步获取响应中的json数据已经在第一步中提过了。 最终得到的数据通过Json.cn解析后是下面这个样子 Google Trends支持多个词条比较（最多五个），多个词条的对比数据爬取方式和单个词条类似，不同的是在参数部分需要把多个词条用逗号拼接，大家可以自行探索。 如有疑问或建议欢迎在评论区留言。]]></content>
+      <categories>
+        <category>爬虫笔记</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>爬虫</tag>
+        <tag>实习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[致雪野小姐（言叶之庭）]]></title>
+    <url>%2F2017%2F05%2F28%2Fthe-garden-of-words%2F</url>
+    <content type="text"><![CDATA[雪野小姐 请忘记我刚才的话吧 我其实根本不喜欢你 你从一开始就似乎 不招人喜欢 一大早就喝啤酒 用莫名其妙的短歌来糊弄人 自己的事只字不提 却不停套出别人的心思 你早就知道我们是师生关系了吧 也太狡猾了 如果知道你是老师 我也不会提起制鞋的事了 反正也做不到 不可能实现 为什么不这么告诉我呢 是不是觉得 小孩子的梦话随便敷衍一下就行了 我再憧憬什么 再爱慕谁 也无法传达 不过一厢情愿 你从一开始就知道了 那就说清楚啊 真碍眼 小孩子就该乖乖去上学 说你讨厌我 你啊 你就一直那样 总对重要的事只字不提 然后摆出如无其事的表情 一直孤单一人 度过一生吧!]]></content>
+      <categories>
+        <category>光影笔记</category>
+      </categories>
+      <tags>
+        <tag>电影</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[解决移动端网页上传图片自动旋转的问题]]></title>
+    <url>%2F2017%2F05%2F27%2Fphoto-rotating%2F</url>
+    <content type="text"><![CDATA[问题描述之前在开发微信公众号的时候，遇到有一个需求是需要允许用户在移动端的网页上传图片。然而在初步开发后遇到一个bug：大多数情况下，用户上传的照片显示出来都会被旋转90度或者180度。比如手机中选择的图片是这样子：而用户上传以后显示出来的照片是这些样子：当时由于时间紧急，产品带着这个bug就直接上线给内部人员使用了，结果后台看到的照片四个角度的都有，看的我头都歪了。 Exif.js简介后来我在网上找到了这个Exif.js库：Exif.js 读取图像的元数据 Exif.js 提供了 JavaScript 读取图像的原始数据的功能扩展，例如：拍照方向、相机设备型号、拍摄时间、ISO 感光度、GPS 地理位置等数据。 实际上用手机拍摄的照片文件中都会存有许多拍摄信息比如设备型号、拍摄时间、拍摄地点等等。通过Exif.js库我们可以从照片中方便地获取这些信息。 解决思路所以接下来的思路就是在用户上传图片的时候对使用Exif.js读取图片的拍摄方向，根据用户的拍摄方向对图像进行相应的旋转，使之正常显示。 通过Exif.js我们可以得到图像的拍摄方向Orientation，它是一个整数，这个参数的值和对应的意义以及调整的方式如下表所示: Orientation 原图 调整方式 1 不变 2 左右翻转 3 顺（逆）时针旋转180° 4 上下翻转 5 顺时针旋转90°，左右翻转 6 顺时针旋转90° 7 逆时针旋转90°，左右翻转 8 逆时针旋转90° 值得注意的是，在这个bug中我们只会遇到Orientation值为1，3，6，8的情况，因为我们只存在拍摄角度的问题，不存在翻转问题。 代码最后附上代码，代码中使用canvas对照片进行旋转处理，这里就不赘述了。123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354$uploaderInput.on("change", function(e)&#123; var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files; for (var i = 0, len = files.length; i &lt; len; ++i) &#123; var file = files[i]; // Ensure it's an image if(file.type.match(/image.*/)) &#123; console.log('An image has been loaded'); // Load the image var reader = new FileReader(); reader.onload = function (readerEvent) &#123; var image = new Image(); image.onload = function (imageEvent) &#123; EXIF.getData(image, function() &#123; EXIF.getAllTags(this); Orientation = EXIF.getTag(this, 'Orientation'); &#125;); var cxt = canvas.getContext('2d'); if(Orientation == 3) &#123; canvas.width = width; canvas.height = height; cxt.rotate(Math.PI); cxt.drawImage(image, 0, 0, -width, -height); &#125; else if(Orientation == 8) &#123; canvas.width = height; canvas.height = width; cxt.rotate(Math.PI * 3 / 2); cxt.drawImage(image, 0, 0, -width, height); &#125; else if(Orientation == 6) &#123; canvas.width = height; canvas.height = width; cxt.rotate(Math.PI / 2); cxt.drawImage(image, 0, 0, width, -height); &#125; else &#123; canvas.width = width; canvas.height = height; cxt.drawImage(image, 0, 0, width, height); &#125; var dataUrl = canvas.toDataURL('image/jpeg'); var resizedImage = dataURLToBlob(dataUrl); $.event.trigger(&#123; type: "imageResized", blob: resizedImage, url: dataUrl &#125;); &#125;; image.src = readerEvent.target.result; &#125;; reader.readAsDataURL(file); &#125; &#125;&#125;);]]></content>
+      <categories>
+        <category>前端笔记</category>
+      </categories>
+      <tags>
+        <tag>实习</tag>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[光生给结夏的信（最完美的离婚）]]></title>
+    <url>%2F2017%2F05%2F26%2Fsaikou-no-rikon%2F</url>
+    <content type="text"><![CDATA[星野 结夏小姐： 春寒料峭，你是否安好？没有感冒吧？没有长冻疮吧？对不起，突然给你写信。如果能承蒙你在寒夜中雅鉴，不胜荣幸。 首先，向你报告，在我们家即将迎来第三个年头的两只猫的情况。不知为何，它们最近经常看电视，边看股票的新闻边交谈。对它们的人生来说，股票有什么作用呢？ 金鱼咖啡，因为姐姐要调养身体，最近继男姐夫在画咖啡拉花，画风独辟蹊径，经常有女性客人失望而归。 经由上原先生介绍，前几天终于见到了河合先生。我很震惊，河合先生是位希腊雕像一样的大帅哥。他伸手同我握手，说，“初次见面”，不知道能不能和他成为朋友。 在目黑川来来往往的人们，抬头看着樱花树，期待着开花时节，已经互相定下了赏花的约定，那个热闹的季节又要到来了。 昨天我梦到你了，梦见你抱着好多气球。你把无数个气球系在我和你的身上，我和你被气球带起，飞上了天空。俯瞰着目黑川，发现玛蒂尔达和八朔在抬头看着我们，上原夫妇抱着小婴儿朝我们招手。我只能被气球带着，随风飘荡，对自己的无力有点悲伤。 我现在依然每天会走过岸边的街道，不可思议的是，并不觉得自己是一个人。我依然每天都同你的记忆一起生活着。你经常在浴室里唱的歌，“静静地，静静地，握起你的手，握起你的手”，这样开头的歌，这样的场景。 想起深夜两个人出门借DVD的那一次，我和你注意到月亮已经变得好大，一时忘了出门的理由，在夜色中散起步来。在旧山手路买了烤红薯，掰成两半之后，发现大小相差悬殊，于是猜拳决定。吃着红薯，笑着，牵着手。我说要结婚，你的嘴巴被红薯塞得满满囔囔的，含糊不清地回答了我，这样的开始，这样的场景。 和你结婚后，我懂得了很多事。洗手台上并排着的牙刷，被窝中碰到的脚，不知何时消失掉的冰箱中的布丁，先下楼梯，和在你的后面上楼梯……恋爱总有一天会变成生活，生活会变成喜悦。穿错了女生袜子出门，发邮件来拜托我录的电视节目，抓背，做噩梦了就互相依偎，另一位父亲，另一位母亲，另一个家乡，家乡寄来的装在蜜柑箱子里的白菜，由生活演奏的音乐，在生活中互相传达的故事……这里还四处散落着，房间的角落里，电灯泡的里面，窗帘的缝隙里，还同以前一样留着。 我如今也每天感受着从过去而来的你所留下的爱情。我今天也会走过河边的街道，各自拥有的两个人一起生活过的回忆，住在我心中的你，闯进你世界的我，不可思议的，并不觉得变成了一个人。 总有一天会觉得这样的想法太过愚蠢，却还是这样想着，在夜色中散步，猜拳决定，吃着烤红薯，笑着，牵着手，含着满口的烤红薯，再说起同样的话。 我们在一起的话会很开心吧？一起慢慢变老吧？可以嫁给我吗？ 2014年2月8日， 我在目黑川岸边的旧公寓，和两只猫一起，等待着春天的来临。]]></content>
+      <categories>
+        <category>光影笔记</category>
+      </categories>
+      <tags>
+        <tag>日剧</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2F2017%2F05%2F26%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+</search>

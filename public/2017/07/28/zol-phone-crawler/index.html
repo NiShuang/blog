@@ -1,0 +1,1323 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="python,爬虫,实习," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="需求由于安卓手机的配置不尽相同，在公司推出安卓版360度全景相机 Insta360 Air 后，客服经常会收到来电，询问其手机型号是否适用该产品。大部分情况下顾客只知道自己的手机型号，却不知道其详细参数，这让客服的工作量大大增加。于是客服主管希望能把ZOL 中关村在线里的所有安卓系统的手机型号和其对应的参数通过爬虫搜集下来，做成Excel表格方便以后随时随地检索手机参数。">
+<meta name="keywords" content="python,爬虫,实习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ZOL中关村在线手机参数爬虫">
+<meta property="og:url" content="http://yoursite.com/2017/07/28/zol-phone-crawler/index.html">
+<meta property="og:site_name" content="年轮说 | Ciel Ni">
+<meta property="og:description" content="需求由于安卓手机的配置不尽相同，在公司推出安卓版360度全景相机 Insta360 Air 后，客服经常会收到来电，询问其手机型号是否适用该产品。大部分情况下顾客只知道自己的手机型号，却不知道其详细参数，这让客服的工作量大大增加。于是客服主管希望能把ZOL 中关村在线里的所有安卓系统的手机型号和其对应的参数通过爬虫搜集下来，做成Excel表格方便以后随时随地检索手机参数。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/0060lm7Tgy1fhzoirdq0pj311v0jbgnf.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/0060lm7Tgy1fhzoirgz9rj30rj0g6ad2.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/0060lm7Tgy1fhzoirbo9wj30wv0hnmy5.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/0060lm7Tgy1fhzoiri0z2j310l0fiq5m.jpg">
+<meta property="og:updated_time" content="2017-10-30T05:09:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ZOL中关村在线手机参数爬虫">
+<meta name="twitter:description" content="需求由于安卓手机的配置不尽相同，在公司推出安卓版360度全景相机 Insta360 Air 后，客服经常会收到来电，询问其手机型号是否适用该产品。大部分情况下顾客只知道自己的手机型号，却不知道其详细参数，这让客服的工作量大大增加。于是客服主管希望能把ZOL 中关村在线里的所有安卓系统的手机型号和其对应的参数通过爬虫搜集下来，做成Excel表格方便以后随时随地检索手机参数。">
+<meta name="twitter:image" content="http://ww2.sinaimg.cn/large/0060lm7Tgy1fhzoirdq0pj311v0jbgnf.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: false,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/28/zol-phone-crawler/"/>
+
+
+
+
+
+  <title>ZOL中关村在线手机参数爬虫 | 年轮说 | Ciel Ni</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?13b24ca16ee5e4bcb2401a6d9411054a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">年轮说 | Ciel Ni</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">很高兴认识你</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/28/zol-phone-crawler/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ciel Ni">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="年轮说 | Ciel Ni">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ZOL中关村在线手机参数爬虫</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-28T15:15:54+08:00">
+                2017-07-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/爬虫笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">爬虫笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>由于安卓手机的配置不尽相同，在公司推出安卓版360度全景相机 Insta360 Air 后，客服经常会收到来电，询问其手机型号是否适用该产品。大部分情况下顾客只知道自己的手机型号，却不知道其详细参数，这让客服的工作量大大增加。于是客服主管希望能把<a href="http://detail.zol.com.cn/cell_phone_advSearch/subcate57_1_s1398-s7074-s6500-s6502-s6106_1_1__1.html#showc" target="_blank" rel="external">ZOL 中关村在线</a>里的所有安卓系统的手机型号和其对应的参数通过爬虫搜集下来，做成Excel表格方便以后随时随地检索手机参数。</p>
+<a id="more"></a> 
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="http://ww2.sinaimg.cn/large/0060lm7Tgy1fhzoirdq0pj311v0jbgnf.jpg" alt="条件筛选"></p>
+<p>在选择限定的操作系统条件后，得到该url，经过测试发现，url最后下划线后面的数为页码。不过，手机列表的参数信息是不完整的，点击更多参数可以得到每个手机型号的详细参数信息，所以我们应该存下每个手机型号更多参数页面的url。</p>
+<p><img src="http://ww3.sinaimg.cn/large/0060lm7Tgy1fhzoirgz9rj30rj0g6ad2.jpg" alt="手机列表"></p>
+<p>针对每一个型号的手机，访问其参数详情页进行参数采集。</p>
+<p><img src="http://ww2.sinaimg.cn/large/0060lm7Tgy1fhzoirbo9wj30wv0hnmy5.jpg" alt="参数详情"></p>
+<p>关于如何选用何种方式进行爬虫采集。由于ZOL中关村在线的手机信息数据都是在请求url时就同步返回给浏览器的，不存在js异步加载的问题，所以我们可以直接用urllib2库或者requests来请求url获取网页信息。由于网页信息比较复杂，我们需要 Beautiful Soup 来帮助我们解析html页面，获取参数信息。（<a href="http://cuiqingcai.com/1319.html" target="_blank" rel="external">Beautiful Soup教程</a>）</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>下面通过代码加注释来介绍具体的操作步骤，在这之前希望大家已经看过上面的Beautiful Soup教程，对Beautiful Soup的使用方法有一定了解。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> urllib2</div><div class="line"><span class="keyword">import</span> re</div><div class="line"><span class="keyword">import</span> xlwt</div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"></div><div class="line">reload(sys)</div><div class="line">sys.setdefaultencoding(<span class="string">"utf-8"</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">getValue</span><span class="params">(res, key)</span>:</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        result = res[key]</div><div class="line">    <span class="keyword">except</span>:</div><div class="line">        result = <span class="string">''</span></div><div class="line">    <span class="keyword">return</span> result</div><div class="line"><span class="comment">#存放手机参数详情页面的列表</span></div><div class="line">link_list = []</div><div class="line">base_url = <span class="string">'http://detail.zol.com.cn/cell_phone_advSearch/subcate57_1_s1398-s7074-s6500-s6502-s6106_1_1__'</span></div><div class="line"><span class="comment">#控制页面数</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">145</span>):    </div><div class="line">    url = base_url + str(i) + <span class="string">'.html#showc'</span></div><div class="line">    response = urllib2.urlopen(url)</div><div class="line">    page = response.read()</div><div class="line">    soup = BeautifulSoup(page, <span class="string">'html.parser'</span>)</div><div class="line">    ul = soup.find(<span class="string">'ul'</span>, class_=<span class="string">'result_list'</span>)</div><div class="line">    <span class="keyword">print</span> url</div><div class="line">    temp = ul.find_all(<span class="string">'a'</span>, text=<span class="string">'更多参数&gt;&gt;'</span>)</div><div class="line">    <span class="keyword">for</span> link <span class="keyword">in</span> temp:</div><div class="line">        link_list.append(<span class="string">'http://detail.zol.com.cn'</span> + link[<span class="string">'href'</span>])  <span class="comment">#把每个手机型号的参数详情页存进数组</span></div><div class="line"></div><div class="line">res_list = []</div><div class="line"><span class="keyword">for</span> url <span class="keyword">in</span> link_list:</div><div class="line">    response = urllib2.urlopen(url)</div><div class="line">    page = response.read()</div><div class="line">    <span class="comment">#使用beautiful soup解析html页面，page是字符串</span></div><div class="line">    soup = BeautifulSoup(page, <span class="string">'html.parser'</span>)</div><div class="line">    result = &#123;&#125;</div><div class="line">    <span class="comment">#去掉多余的br，br有可能会导致BeautifulSoup解析出错</span></div><div class="line">    <span class="keyword">for</span> linebreak <span class="keyword">in</span> soup.find_all(<span class="string">'br'</span>):</div><div class="line">        linebreak.extract()</div><div class="line"></div><div class="line">    <span class="comment">#使用Beautiful Soup提供的方法定位我们想要得到的参数信息</span></div><div class="line">    div = soup.find(<span class="string">'div'</span>,class_=<span class="string">'breadcrumb'</span>)</div><div class="line">    a_list = div.find_all(<span class="string">'a'</span>)</div><div class="line">    brand = a_list[<span class="number">2</span>].string</div><div class="line">    model = a_list[<span class="number">3</span>].string</div><div class="line">    result[<span class="string">'brand'</span>] = brand</div><div class="line">    result[<span class="string">'model'</span>] = model</div><div class="line">    th = soup.find(<span class="string">'th'</span>,text=<span class="string">'硬件'</span>)</div><div class="line">    tr = th.parent</div><div class="line">    list = tr.find(<span class="string">'ul'</span>,class_=<span class="string">'category-param-list'</span>).find_all(<span class="string">'li'</span>)</div><div class="line">    <span class="keyword">for</span> li <span class="keyword">in</span> list:</div><div class="line">        spans = li.find_all(<span class="string">'span'</span>)</div><div class="line">        key = spans[<span class="number">0</span>].string</div><div class="line">        value = spans[<span class="number">1</span>].string</div><div class="line">        <span class="comment"># print spans[1]</span></div><div class="line">        <span class="keyword">if</span> value == <span class="keyword">None</span>:</div><div class="line">            value = <span class="string">''</span></div><div class="line">            temp = spans[<span class="number">1</span>].stripped_strings</div><div class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> temp:</div><div class="line">                value += i + <span class="string">','</span></div><div class="line">        <span class="comment"># print key,value</span></div><div class="line">        result[key] = value</div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        system = result[<span class="string">u'操作系统'</span>]</div><div class="line">        <span class="keyword">if</span> <span class="string">'Android'</span> <span class="keyword">in</span> system:</div><div class="line">            pattern = re.compile(<span class="string">"Android.&#123;0,&#125;"</span>, re.S)</div><div class="line">            items = re.findall(pattern, system)</div><div class="line">            <span class="keyword">try</span>:</div><div class="line">                android = str(items[<span class="number">0</span>])</div><div class="line">            <span class="keyword">except</span>:</div><div class="line">                android = <span class="string">''</span></div><div class="line">        <span class="keyword">else</span>: android = <span class="string">''</span></div><div class="line">    <span class="keyword">except</span>:</div><div class="line">        android = <span class="string">''</span></div><div class="line">    result[<span class="string">'android'</span>] = android</div><div class="line"></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        span  = soup.find(<span class="string">'span'</span>,text=<span class="string">'连接与共享'</span>)</div><div class="line">        temp = span.parent.find_all(<span class="string">'span'</span>)[<span class="number">1</span>]</div><div class="line">        hasOTG =  <span class="string">'OTG'</span> <span class="keyword">in</span> temp.strings</div><div class="line">        <span class="keyword">if</span> hasOTG:</div><div class="line">            result[<span class="string">'OTG'</span>] = <span class="string">'Y'</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            result[<span class="string">'OTG'</span>] = <span class="string">'N'</span></div><div class="line">    <span class="keyword">except</span>:</div><div class="line">        result[<span class="string">'OTG'</span>] = <span class="string">'N'</span></div><div class="line">    <span class="keyword">for</span> key <span class="keyword">in</span> result:</div><div class="line">        <span class="keyword">print</span> key,result[key]</div><div class="line">    res_list.append(result)</div><div class="line"></div><div class="line"><span class="comment">#创建工作簿</span></div><div class="line">workbook = xlwt.Workbook(encoding=<span class="string">'utf8'</span>)           </div><div class="line"><span class="comment">#创建sheet                </span></div><div class="line">sheet1 = workbook.add_sheet(<span class="string">u'手机参数表'</span>, cell_overwrite_ok=<span class="keyword">True</span>)  </div><div class="line">row0 = [<span class="string">u'品牌'</span>, <span class="string">u'机型'</span>, <span class="string">u'是否支持OTG'</span>, <span class="string">u'安卓版本'</span>, <span class="string">u'操作系统'</span>, <span class="string">u'运行内存'</span>,</div><div class="line">        <span class="string">u'机身内存'</span>, <span class="string">u'扩展容量'</span>, <span class="string">u'CPU型号'</span>, <span class="string">u'GPU型号'</span>, <span class="string">u'CPU频率'</span>, <span class="string">u'存储卡'</span>, <span class="string">u'用户界面'</span>, <span class="string">u'电池容量'</span>, <span class="string">u'电池类型'</span>, <span class="string">u'核心数'</span>]</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(row0)):</div><div class="line">    sheet1.write(<span class="number">0</span>, i, row0[i])</div><div class="line">row_index = <span class="number">1</span></div><div class="line"><span class="keyword">for</span> res <span class="keyword">in</span> res_list:</div><div class="line">        rows = [</div><div class="line">            getValue(res, <span class="string">'brand'</span>),</div><div class="line">            getValue(res, <span class="string">'model'</span>),</div><div class="line">            getValue(res, <span class="string">'OTG'</span>),</div><div class="line">            getValue(res, <span class="string">'android'</span>),</div><div class="line">            getValue(res, <span class="string">u'操作系统'</span>),</div><div class="line">            getValue(res, <span class="string">u'RAM容量'</span>),</div><div class="line">            getValue(res, <span class="string">u'ROM容量'</span>),</div><div class="line">            getValue(res, <span class="string">u'扩展容量'</span>),</div><div class="line">            getValue(res, <span class="string">u'CPU型号'</span>),</div><div class="line">            getValue(res, <span class="string">u'GPU型号'</span>),</div><div class="line">            getValue(res, <span class="string">u'CPU频率'</span>),</div><div class="line">            getValue(res, <span class="string">u'存储卡'</span>),</div><div class="line">            getValue(res, <span class="string">u'用户界面'</span>),</div><div class="line">            getValue(res, <span class="string">u'电池容量'</span>),</div><div class="line">            getValue(res, <span class="string">u'电池类型'</span>),</div><div class="line">            getValue(res, <span class="string">u'核心数'</span>)</div><div class="line">        ]</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(rows)):</div><div class="line">            sheet1.write(row_index, i, rows[i])</div><div class="line">        row_index += <span class="number">1</span></div><div class="line">t = str(time.time())</div><div class="line">workbook.save(t + <span class="string">'.xls'</span>)  <span class="comment"># 保存文件</span></div></pre></td></tr></table></figure>
+<p>Github地址： <a href="https://github.com/NiShuang/mobile_info_crawler" target="_blank" rel="external">https://github.com/NiShuang/mobile_info_crawler</a></p>
+<h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><p>导出的Excel表格如下图所示：</p>
+<p><img src="http://ww2.sinaimg.cn/large/0060lm7Tgy1fhzoiri0z2j310l0fiq5m.jpg" alt="Excel表格"></p>
+<hr>
+<blockquote>
+<p>文章标题：<a href="http://www.cielni.com/2017/07/28/zol-phone-crawler/" target="_blank" rel="external">ZOL中关村在线手机参数爬虫</a><br>文章作者：<a href="http://www.cielni.com/about/" target="_blank" rel="external">Ciel Ni</a><br>文章链接：<a href="http://www.cielni.com/2017/07/28/zol-phone-crawler/" target="_blank" rel="external">http://www.cielni.com/2017/07/28/zol-phone-crawler/</a><br>有问题或建议欢迎在<a href="http://www.cielni.com" target="_blank" rel="external">我的博客</a>讨论，转载或引用希望标明出处，感激不尽！</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin-reward.png" alt="Ciel Ni WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay-reward.png" alt="Ciel Ni Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
+          
+            <a href="/tags/实习/" rel="tag"># 实习</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/25/operation-love/" rel="next" title="健的最后告白（求婚大作战）">
+                <i class="fa fa-chevron-left"></i> 健的最后告白（求婚大作战）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/31/nju-software/" rel="prev" title="就算归来不再是少年">
+                就算归来不再是少年 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="uyan_frame"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="Ciel Ni" />
+          <p class="site-author-name" itemprop="name">Ciel Ni</p>
+           
+              <p class="site-description motion-element" itemprop="description">起风了 唯有努力生存</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/cielni" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/NiShuang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/cielni/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-address-book-o"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/ciellllllni" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/cielni" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-address-book"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/ciel.ni.16" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/153a0f144da3" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-book"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/cielni/" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>
+                  
+                  Instagram
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://music.163.com/#/user/home?id=70009999" target="_blank" title="网易云音乐">
+                  
+                    <i class="fa fa-fw fa-cloud"></i>
+                  
+                  网易云音乐
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wycheng.me/" title="王雨城的个人博客" target="_blank">王雨城的个人博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://ziachou.com/" title="Zia's Blog" target="_blank">Zia's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.wadeqt.com/" title="Wade Chen's Blog" target="_blank">Wade Chen's Blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://kerita.github.io/" title="Kerita's Blog" target="_blank">Kerita's Blog</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+        
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=450 src="//music.163.com/outchain/player?type=0&id=740900047&auto=0&height=430"></iframe>
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#需求"><span class="nav-number">1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析"><span class="nav-number">2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果"><span class="nav-number">4.</span> <span class="nav-text">结果</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ciel Ni</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2138478"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (search_path.endsWith("json")) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -225,9 +225,10 @@ links_layout: block
 #links_layout: inline
 links:
   王雨城的个人博客: http://wycheng.me/
-  Zia's Blog: http://ziachou.com/
+  Zia's Blog: http://ziazhou.com/
   Wade Chen's Blog: http://www.wadeqt.com/
   Kerita's Blog: https://kerita.github.io/
+  Diamond Zhang: http://www.cielni.com/gift/diamond/pic/
 
 
 # ---------------------------------------------------------------
@@ -341,7 +342,7 @@ changyan:
 
 # Support for youyan comments system.
 # You can get your uid from http://www.uyan.cc
-youyan_uid: 2138478
+# youyan_uid: 2138478
 
 # Support for LiveRe comments system.
 # You can get your uid from https://livere.com/insight/myCode (General web site)
@@ -452,7 +453,7 @@ busuanzi_count:
 
 
 # Enable baidu push so that the blog will push the url to baidu automatically which is very helpful for SEO
-baidu_push: false
+baidu_push: true
 
 # Google Calendar
 # Share your recent schedule to others via calendar page

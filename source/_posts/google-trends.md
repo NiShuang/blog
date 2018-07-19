@@ -142,4 +142,8 @@ def get_google_trend(key):
 
 Google Trends支持多个词条比较（最多五个），多个词条的对比数据爬取方式和单个词条类似，不同的是在参数部分需要把多个词条用逗号拼接，大家可以自行探索。
 
-如有疑问或建议欢迎在评论区留言。
+---
+> 文章标题：[如何爬取 Google Trends 数据](http://www.cielni.com/2017/05/28/google-trends/)
+> 文章作者：[Ciel Ni](http://www.cielni.com/about/)
+> 文章链接：http://www.cielni.com/2017/05/28/google-trends/
+> 有问题或建议欢迎与我联系讨论，转载或引用希望标明出处，感激不尽！

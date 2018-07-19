@@ -164,4 +164,4 @@ router.start(App, '#app')
 > 文章标题：[解决刷新页面不触发 vue-router 的 beforeEach 钩子的问题](http://www.cielni.com/2017/06/30/vue-router-beforeEach/)
 > 文章作者：[Ciel Ni](http://www.cielni.com/about/)
 > 文章链接：http://www.cielni.com/2017/06/30/vue-router-beforeEach/
-> 有问题或建议欢迎在[我的博客](http://www.cielni.com)讨论，转载或引用希望标明出处，感激不尽！
+> 有问题或建议欢迎与我联系讨论，转载或引用希望标明出处，感激不尽！

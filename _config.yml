@@ -7,12 +7,12 @@ title: 年轮说 | Ciel Ni
 subtitle: 很高兴认识你
 description: 起风了 唯有努力生存
 author: Ciel Ni
-language: zh-Hans
+language: zh-CN
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: http://cielni.com
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -25,7 +25,7 @@ archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
-skip_render: 
+skip_render: gift/**
 
 # Writing
 new_post_name: :title.md # File name of new posts
@@ -69,10 +69,12 @@ search:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: next
+theme: next-reloaded
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:NiShuang/NiShuang.github.io.git
+  repository: 
+    github: git@github.com:NiShuang/NiShuang.github.io.git
+    coding: git@git.coding.net:CielNi/CielNi.coding.me.git
   branch: master

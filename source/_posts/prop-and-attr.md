@@ -14,11 +14,9 @@ categories: 前端笔记
 ``` javascript
 leader = $('#leader_modify');
             if(is_leader == '1'){
-//              leader.attr('checked', 'checked');
-                leader.prop('checked', true)
+              leader.attr('checked', 'checked');
             }else{
-                leader.prop('checked', false);
-//              leader.removeAttr('checked')
+              leader.removeAttr('checked')
             }
 ```
 
@@ -43,11 +41,9 @@ properties就是浏览器用来记录当前值的东西。正常情况下，prop
 ``` javascript
 leader = $('#leader_modify');
             if(is_leader == '1'){
-//              leader.attr('checked', 'checked');
                 leader.prop('checked', true)
             }else{
                 leader.prop('checked', false);
-//              leader.removeAttr('checked')
             }
 ```
 

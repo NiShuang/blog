@@ -7,6 +7,12 @@ tags:
  - 实习
 categories: 爬虫笔记
 ---
+
+> [谷歌趋势爬虫 Github 项目地址(Python)](https://github.com/NiShuang/google_trends_cralwer)
+
+> [谷歌趋势爬虫 Github 项目地址(Java)](https://github.com/NiShuang/google-trends-crawler-java
+)
+
 ## Goole Trends介绍
 
 ### 功能介绍

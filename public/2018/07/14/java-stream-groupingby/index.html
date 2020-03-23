@@ -122,19 +122,21 @@
 
 
   <meta name="description" content="从简单入手Stream 作为 Java 8 的一大亮点，好比一个高级的迭代器（Iterator），单向，不可往复，数据只能遍历一次，遍历过一次后即用尽了，就好比流水从面前流过，一去不复返。  Java 8 中的 Streams API 详解  我们可以利用stream对数据进行分组并求和。示例如下： 12345678910111213List&amp;lt;String&amp;gt; items =">
-<meta name="keywords" content="实习,java">
+<meta name="keywords" content="java,实习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java8 stream 中利用 groupingBy 进行多字段分组求和">
 <meta property="og:url" content="http://cielni.com/2018/07/14/java-stream-groupingby/index.html">
 <meta property="og:site_name" content="年轮说 | Ciel Ni">
 <meta property="og:description" content="从简单入手Stream 作为 Java 8 的一大亮点，好比一个高级的迭代器（Iterator），单向，不可往复，数据只能遍历一次，遍历过一次后即用尽了，就好比流水从面前流过，一去不复返。  Java 8 中的 Streams API 详解  我们可以利用stream对数据进行分组并求和。示例如下： 12345678910111213List&amp;lt;String&amp;gt; items =">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-07-14T08:55:17.864Z">
+<meta property="og:updated_time" content="2018-10-24T03:36:10.916Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java8 stream 中利用 groupingBy 进行多字段分组求和">
 <meta name="twitter:description" content="从简单入手Stream 作为 Java 8 的一大亮点，好比一个高级的迭代器（Iterator），单向，不可往复，数据只能遍历一次，遍历过一次后即用尽了，就好比流水从面前流过，一去不复返。  Java 8 中的 Streams API 详解  我们可以利用stream对数据进行分组并求和。示例如下： 12345678910111213List&amp;lt;String&amp;gt; items =">
 
 
+
+  <link rel="alternate" href="/atom.xml" title="年轮说 | Ciel Ni" type="application/atom+xml" />
 
 
 
@@ -265,7 +267,7 @@
           
           <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">17</span></a>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">18</span></a>
   </li>
         
         
@@ -273,7 +275,7 @@
           
           <li class="menu-item menu-item-categories">
     <a href="/categories/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类<span class="badge">6</span></a>
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类<span class="badge">7</span></a>
   </li>
         
         
@@ -281,7 +283,7 @@
           
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">21</span></a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">28</span></a>
   </li>
 
       
@@ -490,14 +492,14 @@
 <h2 id="进阶需求"><a href="#进阶需求" class="headerlink" title="进阶需求"></a>进阶需求</h2><p>在实际需求中，我们可能需要对一组对象进行分组，而且分组的条件有多个。比如对国家和产品类型进行双重分组，一种比较复杂的方法是先对产品类型进行分组，然后对每一个产品类型中的国际名进行分组求和。示例如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Map&lt;String, List&lt;item&gt;&gt; countMap = recordItems.stream().collect(Collectors.groupingBy(o -&gt; o.getProductType()));</div><div class="line"></div><div class="line">List&lt;Record&gt; records = <span class="keyword">new</span> ArrayList&lt;Record&gt;;</div><div class="line">countMap.keySet().forEach(productType -&gt; &#123;</div><div class="line">	Map&lt;String, Long&gt; countMap1 = countMap.get(productType).stream().collect(Collectors.groupingBy(o -&gt; o.getCountry(), Collectors.counting()));</div><div class="line">	countMap1(key).stream().forEach(country -&gt; &#123;</div><div class="line">		Record record = <span class="keyword">new</span> Record();</div><div class="line">	    record.set(<span class="string">"device_type"</span>, productType);</div><div class="line">	    record.set(<span class="string">"location"</span>, country;</div><div class="line">	    record.set(<span class="string">"count"</span>, countMap1(key).intValue());</div><div class="line">	    records.add(record);</div><div class="line">	&#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <h2 id="更好的解决方法"><a href="#更好的解决方法" class="headerlink" title="更好的解决方法"></a>更好的解决方法</h2><p>上面的方法在应对两个字段的分组要求时，还能应付的过来，但如果字段超过两个时，每增加一个字段，就会多出很多代码行，显然不太合理。更合理的方法是，增加一个 getKey()方法，返回多个字段组成的唯一key，比如通过下划线连接等等。示例如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">RecordItem</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> String deviceType;</div><div class="line">    <span class="keyword">private</span> String country;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RecordItem</span><span class="params">(String deviceType, String country)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.deviceType = deviceType;</div><div class="line">        <span class="keyword">this</span>.country = country;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getKey</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> deviceType + <span class="string">"_"</span> + country;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> RecordItem <span class="title">parseKey</span><span class="params">(String s)</span></span>&#123;</div><div class="line">        String[] parts = s.split(<span class="string">"_"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RecordItem(parts[<span class="number">0</span>], parts[<span class="number">1</span>]);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">// 分组统计</span></div><div class="line">Map&lt;String, Long&gt; countMap = recordItems.stream().collect(Collectors.groupingBy(o -&gt; o.getKey(), Collectors.counting()));</div><div class="line"></div><div class="line">List&lt;Record&gt; countRecords = countMap.keySet().stream().map(key -&gt; &#123;</div><div class="line">    RecordItem recordItem = RecordItem.parseKey(key);</div><div class="line">    Record record = <span class="keyword">new</span> Record();</div><div class="line">    record.set(<span class="string">"device_type"</span>, recordItem.deviceType);</div><div class="line">    record.set(<span class="string">"location"</span>, recordItem.country;</div><div class="line">    record.set(<span class="string">"count"</span>, countMap.get(key).intValue());</div><div class="line">    <span class="keyword">return</span> record;</div><div class="line">&#125;).collect(Collectors.toList());</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">// 分组统计</span></div><div class="line">Map&lt;String, Long&gt; countMap = records.stream().collect(Collectors.groupingBy(o -&gt; o.getProductType() + <span class="string">"_"</span> + o.getCountry(), Collectors.counting()));</div><div class="line"></div><div class="line">List&lt;Record&gt; countRecords = countMap.keySet().stream().map(key -&gt; &#123;</div><div class="line">    String[] temp = key.split(<span class="string">"_"</span>);</div><div class="line">    String productType = temp[<span class="number">0</span>];</div><div class="line">    String country = temp[<span class="number">1</span>];</div><div class="line">    </div><div class="line">    Record record = <span class="keyword">new</span> Record();</div><div class="line">    record.set(<span class="string">"device_type"</span>, productType);</div><div class="line">    record.set(<span class="string">"location"</span>, country;</div><div class="line">    record.set(<span class="string">"count"</span>, countMap.get(key).intValue());</div><div class="line">    <span class="keyword">return</span> record;</div><div class="line">&#125;).collect(Collectors.toList());</div></pre></td></tr></table></figure>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
 <li><a href="https://www.ibm.com/developerworks/cn/java/j-lo-java8streamapi/" target="_blank" rel="external">Java 8 中的 Streams API 详解</a></li>
 <li><a href="https://blog.csdn.net/u013078669/article/details/52717142" target="_blank" rel="external">Java 8 – 分组GroupBy</a></li>
 </ul>
 <hr>
 <blockquote>
-<p>文章标题：<a href="http://www.cielni.com/2018/07/14/java-stream-groupingby/" target="_blank" rel="external">Java8 stream 中利用g roupingBy 进行多字段分组求和</a><br>文章作者：<a href="http://www.cielni.com/about/" target="_blank" rel="external">Ciel Ni</a><br>文章链接：<a href="http://www.cielni.com/2018/07/14/java-stream-groupingby/" target="_blank" rel="external">http://www.cielni.com/2018/07/14/java-stream-groupingby/</a><br>有问题或建议欢迎与我联系讨论，转载或引用希望标明出处，感激不尽！</p>
+<p>文章标题：<a href="http://www.cielni.com/2018/07/14/java-stream-groupingby/" target="_blank" rel="external">Java8 stream 中利用 groupingBy 进行多字段分组求和</a><br>文章作者：<a href="http://www.cielni.com/about/" target="_blank" rel="external">Ciel Ni</a><br>文章链接：<a href="http://www.cielni.com/2018/07/14/java-stream-groupingby/" target="_blank" rel="external">http://www.cielni.com/2018/07/14/java-stream-groupingby/</a><br>有问题或建议欢迎与我联系讨论，转载或引用希望标明出处，感激不尽！</p>
 </blockquote>
 
       
@@ -556,9 +558,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/实习/" rel="tag"># 实习</a>
-          
             <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/实习/" rel="tag"># 实习</a>
           
         </div>
       
@@ -625,6 +627,11 @@
           
 
   
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ1My82MDIx"></div>
+    </div>
+
+  
 
 
 
@@ -659,6 +666,7 @@
         </ul>
       
 
+
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -678,7 +686,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-count">28</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -703,11 +711,14 @@
                     
                       
                     
-                    <span class="site-state-item-count">6</span>
+                      
+                    
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
               
+
 
               
                 
@@ -750,12 +761,23 @@
                     
                       
                     
-                    <span class="site-state-item-count">17</span>
+                      
+                    
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
               
             </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
           
 
           
@@ -804,7 +826,7 @@
                 </span>
               
                 <span class="links-of-author-item">
-                  <a href="http://music.163.com/#/user/home?id=70009999" target="_blank" title="网易云音乐"><i class="fa fa-fw fa-cloud"></i>网易云音乐</a>
+                  <a href="http://music.163.com/#/user/home?id=70009999" target="_blank" title="网易云音乐"><i class="fa fa-fw fa-music"></i>网易云音乐</a>
                   
                 </span>
               
@@ -818,6 +840,7 @@
 
           
           
+
 
           
           
@@ -852,8 +875,10 @@
             </div>
           
 
+          <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=400 src="//music.163.com/outchain/player?type=0&id=740900047&auto=0&height=380"></iframe>
+
           
-          <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=450 src="//music.163.com/outchain/player?type=0&id=740900047&auto=0&height=430"></iframe>
+          
             
           
           
@@ -898,7 +923,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-heart"></i>
   </span>
@@ -929,7 +954,7 @@
 
         
 <div class="busuanzi-count">
-  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
   
     <span class="site-uv" title="总访客量">
@@ -1069,6 +1094,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
@@ -1456,9 +1492,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/js.cookie.js?v=6.3.0"></script>
-  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=6.3.0"></script>
-
 
   
 
@@ -1468,7 +1501,7 @@
   <script src="/lib/bookmark/bookmark.min.js?v=1.0"></script>
   <script type="text/javascript">
   
-    bookmark.scrollToMark('auto', "#更多");
+    bookmark.scrollToMark('manual', "#更多");
   
   </script>
 

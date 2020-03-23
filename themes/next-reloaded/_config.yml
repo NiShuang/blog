@@ -56,7 +56,7 @@ favicon:
 # Set rss to false to disable feed link.
 # Leave rss as empty to use site's feed link, and install hexo-generator-feed: `npm install hexo-generator-feed --save`.
 # Set rss to specific value if you have burned your feed already.
-rss: false
+rss: 
 
 footer:
   # Specify the date when the site was setup.
@@ -166,7 +166,7 @@ social:
   Facebook: https://www.facebook.com/ciel.ni.16 || facebook
   简书: http://www.jianshu.com/u/153a0f144da3 || book
   Instagram: https://www.instagram.com/cielni/ || instagram
-  网易云音乐: http://music.163.com/#/user/home?id=70009999 || cloud
+  网易云音乐: http://music.163.com/#/user/home?id=70009999 || music
   E-Mail: mailto:562421167@qq.com || envelope
 
 social_icons:
@@ -267,7 +267,7 @@ sidebar:
 scroll_to_more: true
 
 # Automatically saving scroll position on each post/page in cookies.
-save_scroll: true
+save_scroll: false
 
 # Automatically excerpt description in homepage as preamble text.
 excerpt_description: true
@@ -519,7 +519,7 @@ valine:
 
 # Support for LiveRe comments system.
 # You can get your uid from https://livere.com/insight/myCode (General web site)
-#livere_uid: your uid
+livere_uid: MTAyMC8yOTQ1My82MDIx
 
 # Gitment
 # Introduction: https://imsun.net/posts/gitment-introduction/
@@ -733,7 +733,7 @@ bookmark:
   #   - save the reading position when closing the page
   #   - or clicking the bookmark-icon
   # if manual, only save it by clicking the bookmark-icon
-  save: auto
+  save: manual
 
 
 # ---------------------------------------------------------------

@@ -68,34 +68,17 @@ countMap.keySet().forEach(productType -> {
 
 ```java
 
-private static class RecordItem {
-    private String deviceType;
-    private String country;
-
-    public RecordItem(String deviceType, String country) {
-        this.deviceType = deviceType;
-        this.country = country;
-    }
-
-    public String getKey() {
-        return deviceType + "_" + country;
-    }
-
-    public static RecordItem parseKey(String s){
-        String[] parts = s.split("_");
-        return new RecordItem(parts[0], parts[1]);
-    }
-}
-
-
 // 分组统计
-Map<String, Long> countMap = recordItems.stream().collect(Collectors.groupingBy(o -> o.getKey(), Collectors.counting()));
+Map<String, Long> countMap = records.stream().collect(Collectors.groupingBy(o -> o.getProductType() + "_" + o.getCountry(), Collectors.counting()));
 
 List<Record> countRecords = countMap.keySet().stream().map(key -> {
-    RecordItem recordItem = RecordItem.parseKey(key);
+    String[] temp = key.split("_");
+    String productType = temp[0];
+    String country = temp[1];
+    
     Record record = new Record();
-    record.set("device_type", recordItem.deviceType);
-    record.set("location", recordItem.country;
+    record.set("device_type", productType);
+    record.set("location", country;
     record.set("count", countMap.get(key).intValue());
     return record;
 }).collect(Collectors.toList());
@@ -108,7 +91,7 @@ List<Record> countRecords = countMap.keySet().stream().map(key -> {
 
 ---
 
-> 文章标题：[Java8 stream 中利用g roupingBy 进行多字段分组求和](http://www.cielni.com/2018/07/14/java-stream-groupingby/)
+> 文章标题：[Java8 stream 中利用 groupingBy 进行多字段分组求和](http://www.cielni.com/2018/07/14/java-stream-groupingby/)
 > 文章作者：[Ciel Ni](http://www.cielni.com/about/)
 > 文章链接：http://www.cielni.com/2018/07/14/java-stream-groupingby/
 > 有问题或建议欢迎与我联系讨论，转载或引用希望标明出处，感激不尽！

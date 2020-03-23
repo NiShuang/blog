@@ -26,6 +26,7 @@
         </ul>
       {% endif %}
 
+
       <section class="site-overview-wrap sidebar-panel{% if not display_toc or toc(page.content).length <= 1 %} sidebar-panel-active{% endif %}">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -70,6 +71,7 @@
                 </div>
               {% endif %}
 
+
               {% if site.tags.length > 0 %}
                 {% set tagsPageQuery = site.pages.find({type: 'tags'}, {lean: true}) %}
                 {% set hasTagsPage = tagsPageQuery.length > 0 %}
@@ -95,6 +97,8 @@
               </a>
             </div>
           {% endif %}
+
+          
 
           {% if theme.social %}
             <div class="links-of-author motion-element">
@@ -130,6 +134,7 @@
             </div>
           {% endif %}
 
+
           {# Blogroll #}
           {% if theme.links %}
             <div class="links-of-blogroll motion-element {{ "links-of-blogroll-" + theme.links_layout | default('inline') }}">
@@ -147,10 +152,12 @@
             </div>
           {% endif %}
 
+          <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=400 src="//music.163.com/outchain/player?type=0&id=740900047&auto=0&height=380"></iframe>
+
           {% if theme.custom_file_path.sidebar %}
             {% set custom_sidebar = '../../../../' + theme.custom_file_path.sidebar %}
           {% else %}
-          <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=450 src="//music.163.com/outchain/player?type=0&id=740900047&auto=0&height=430"></iframe>
+          
             {% set custom_sidebar = '../_custom/sidebar.swig' %}
           {% endif %}
           {% include custom_sidebar %}
